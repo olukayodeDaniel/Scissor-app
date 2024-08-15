@@ -276,7 +276,7 @@ export default {
 }
 
 /* General Styles */
-.homepage p{
+.feature-text p{
     font-family: var(--font-secondary);
 }
 
