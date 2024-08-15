@@ -748,6 +748,7 @@ nav ul li {
 
 .pricing-header-text {
     text-align: left;
+    font-family: var(--font-secondary);
 }
 
 .pricing-header-text h1 {
@@ -824,6 +825,7 @@ nav ul li {
 .footer-column ul li a {
     text-decoration: none;
     color: var(--color-light);
+    font-family: var(--font-secondary);
 }
 
 .footer-column ul li a:hover {
