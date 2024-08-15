@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # scissor_dashboard
 
 ## Project setup
@@ -22,3 +23,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+# Scissor-app
+Olukayode Daniel/AltSchool Capstone Project
+>>>>>>> 1715478984866140993cef422ffc6497cdfddd7b
