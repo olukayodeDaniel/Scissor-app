@@ -189,6 +189,7 @@ export default {
             isMenuHidden: true,
             showModal: false,
             isAuthenticated: false, // Added to track authentication status
+            windowWidth: window.innerWidth // Track window width
         };
     },
     computed: {
@@ -223,8 +224,11 @@ export default {
             this.showModal = false;
         },
         toggleMenu() {
-            this.isMenuHidden = !this.isMenuHidden; // Corrected the typo here
-            console.log('isMenuHidden:', this.isMenuHidden);
+            // Only toggle menu if the window width is 768px or less
+            if (this.windowWidth <= 768) {
+                this.isMenuHidden = !this.isMenuHidden;
+                console.log('isMenuHidden:', this.isMenuHidden);
+            }
         },
         handleScroll() {
             this.isSticky = window.scrollY > 0;
@@ -234,22 +238,39 @@ export default {
             if (section) {
                 section.scrollIntoView({ behavior: 'smooth' });
             }
+        },
+        handleResize() {
+            this.windowWidth = window.innerWidth;
+            console.log('Window width updated:', this.windowWidth);
+             // Close the menu if the window width exceeds 768px
+             if (this.windowWidth > 768) {
+                this.isMenuHidden = false;
+            }
         }
     },
     watch: {
         // Watch for changes in authentication status
         computedAuthStatus(newVal) {
             this.isAuthenticated = newVal;
+        },
+        windowWidth(newWidth) {
+            // Optionally, handle window width changes here
+            console.log('Updated window width:', newWidth);
         }
     },
     mounted() {
         window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener("resize", this.handleResize);
         // Initialize authentication status
         const auth = getAuth();
         this.isAuthenticated = auth.currentUser !== null;
+
+        //handle initial resize
+        this.handleResize();
     },
     unmounted() {
         window.removeEventListener("scroll", this.handleScroll);
+        window.removeEventListener("resize", this.handleResize);
     },
 };
 </script>
@@ -859,7 +880,7 @@ nav ul li {
 
 
 /* Media query for screen width of 1000px or less */
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
     #main-header {
         position: relative;
         flex-direction: column;
