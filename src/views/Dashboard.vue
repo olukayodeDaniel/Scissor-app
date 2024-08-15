@@ -516,7 +516,7 @@ export default {
 }
 
 /* Media Queries */
-@media (max-width: 1000px) {
+@media (max-width: 760px) {
   .dashboard nav ul {
     display: none;
     position: absolute;

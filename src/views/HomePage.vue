@@ -276,6 +276,9 @@ export default {
 }
 
 /* General Styles */
+.homepage p{
+    font-family: var(--font-secondary);
+}
 
 
 /* Header */
