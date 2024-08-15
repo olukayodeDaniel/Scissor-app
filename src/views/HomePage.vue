@@ -23,7 +23,7 @@
                 @click="signOut">Sign Out</button>
 
 
-            <div v-if="!isAuthenticated && !isMenuHidden"  class="auth-buttons" :class="{ 'hidden': isMenuHidden }">
+            <div v-if="!isAuthenticated"  class="auth-buttons" :class="{ 'hidden': isMenuHidden }">
                 <button @click="goToSignin" class="btn signin-btn">Sign in</button>
                 <button @click="goToSignup" class="btn signup-btn">Sign up</button>
             </div>
