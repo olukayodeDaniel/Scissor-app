@@ -19,62 +19,77 @@
     </div>
 
     <DashboardModal :visible="qrModalVisible" @close="hideQrModal">
-      <h2 id="qr-header">QR Code</h2>
-      <img id="qr-code-img" :src="qrCodeImg" alt="QR Code" v-if="qrCodeImg" />
-      <button id="download-qr" class="download-button" v-if="qrCodeImg" @click="downloadQrCode">Download
-        QR</button>
+      <div id="QrModal">
+
+        <h2 id="qr-header">QR Code</h2>
+        <img id="qr-code-img" :src="qrCodeImg" alt="QR Code" v-if="qrCodeImg" />
+        <button id="download-qr" class="download-button" v-if="qrCodeImg" @click="downloadQrCode">Download
+          QR</button>
+      </div>
+
     </DashboardModal>
 
     <DashboardModal :visible="newLinkModalVisible" @close="hideNewLinkModal">
-      <h2>Create New Branded Link</h2>
-      <form @submit.prevent="createLink">
-        <div class="form-group">
-          <label for="destination-url">Destination URL</label>
-          <input type="url" id="destination-url" v-model="newLink.url" placeholder="Input URL" required />
-        </div>
-        <div class="form-group">
-          <label for="signature-slug">Signature Slug</label>
-          <input type="text" id="signature-slug" v-model="newLink.slug" placeholder="Custom Slug" required />
-        </div>
-        <div class="form-group">
-          <p>Link Preview:</p>
-          <div id="link-preview">{{ newLinkPreview }}</div>
-        </div>
-        <button type="submit" class="create-link-button">Create Link</button>
-      </form>
+      <div class="newLinkModal">
+        <h2>Create New Branded Link</h2>
+        <form @submit.prevent="createLink">
+          <div class="form-group">
+            <label for="destination-url">Destination URL</label>
+            <input type="url" id="destination-url" v-model="newLink.url" placeholder="Input URL" required />
+          </div>
+          <div class="form-group">
+            <label for="signature-slug">Signature Slug</label>
+            <input type="text" id="signature-slug" v-model="newLink.slug" placeholder="Custom Slug" required />
+          </div>
+          <div class="form-group">
+            <p>Link Preview:</p>
+            <div id="link-preview">{{ newLinkPreview }}</div>
+          </div>
+          <button type="submit" class="create-link-button">Create Link</button>
+        </form>
+      </div>
     </DashboardModal>
 
     <DashboardModal :visible="shareModalVisible" @close="hideShareModal">
-      <h2>Add Description to Your Links!</h2>
-      <form @submit.prevent="copyLink">
-        <div class="form-group">
-          <label for="link-description">Link Description</label>
-          <input type="text" id="link-description" v-model="linkDescription" placeholder="Add a description" required />
-        </div>
-        <div class="form-group">
-          <p>Preview:</p>
-          <div id="link-preview-share">
-            {{ linkDescription }} <br />
-            <a :href="currentShortLink" target="_blank">{{ currentShortLink }}</a>
+      <div class="shareModal">
+
+        <h2>Add Description to Your Links!</h2>
+        <form @submit.prevent="copyLink">
+          <div class="form-group">
+            <label for="link-description">Link Description</label>
+            <input type="text" id="link-description" v-model="linkDescription" placeholder="Add a description"
+              required />
           </div>
-        </div>
-        <button type="button" class="copy-button" @click="copyLink">Copy Text</button>
-      </form>
+          <div class="form-group">
+            <p>Preview:</p>
+            <div id="link-preview-share">
+              {{ linkDescription }} <br />
+              <a :href="currentShortLink" target="_blank">{{ currentShortLink }}</a>
+            </div>
+          </div>
+          <button type="button" class="copy-button" @click="copyLink">Copy Text</button>
+        </form>
+      </div>
+
+
     </DashboardModal>
 
     <DashboardModal :visible="analyticsModalVisible" @close="hideAnalyticsModal">
-      <h2>Link Analytics</h2>
-      <div id="chart-container"></div>
-      <div class="date-range-selector">
-        <label for="date-range">Select Range:</label>
-        <input class="date-range-input" type="date" v-model="startDate" />
-        <input class="date-range-input" type="date" v-model="endDate" />
-        <button class="data-range-submit" @click="updateChart('custom')">Update Chart</button>
+      <div class="AnalyticsModal">
+        <h2>Link Analytics</h2>
+        <div id="chart-container"></div>
+        <div class="date-range-selector">
+          <label for="date-range">Select Range:</label>
+          <input class="date-range-input" type="date" v-model="startDate" />
+          <input class="date-range-input" type="date" v-model="endDate" />
+          <button class="data-range-submit" @click="updateChart('custom')">Update Chart</button>
+        </div>
+        <button class="analytics-buttons" @click="() => updateChart('hourly')">Hourly</button>
+        <button class="analytics-buttons" @click="() => updateChart('daily')">Daily</button>
+        <button class="analytics-buttons" @click="() => updateChart('monthly')">Monthly</button>
       </div>
-      <button class="analytics-buttons" @click="() => updateChart('hourly')">Hourly</button>
-      <button class="analytics-buttons" @click="() => updateChart('daily')">Daily</button>
-      <button class="analytics-buttons" @click="() => updateChart('monthly')">Monthly</button>
     </DashboardModal>
+
   </div>
 </template>
 
@@ -396,7 +411,7 @@ export default {
   cursor: pointer;
 }
 
-.links-original {
+.dashboard .links-original {
   border: 1px solid #949292;
   background-color: white;
   padding: 10px 20px;
@@ -406,7 +421,7 @@ export default {
   justify-content: space-between;
 }
 
-.links-section {
+.dashboard .links-section {
   font-size: 14px;
   background-color: #eeeeee;
   display: flex;
@@ -420,7 +435,7 @@ export default {
   margin: 0;
 }
 
-.new-link {
+.dashboard .new-link {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -475,6 +490,51 @@ export default {
   margin: 0;
 }
 
+/* QR MODAL */
+#QrModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font_1);
+}
+
+#qr-code-img {
+  width: 120%;
+}
+
+#download-qr,
+.shareModal button {
+  color: #4c6dffff;
+  background: #ffffffff;
+  opacity: 1;
+  border-radius: 4px;
+  border: 1px solid #002effff;
+  text-decoration: none;
+  /* Remove underline */
+  padding: 10px 20px;
+  /* Optional: Add padding for better appearance */
+  transition: background 0.3s ease-in-out;
+  font-family: var(--font_2);
+}
+
+#download-qr:hover,
+#download-qr:focus,
+.shareModal button:hover,
+.shareModal button:focus {
+  color: #ffffffff;
+  background: #4c6dffff;
+}
+
+/* share modal */
+.shareModal {
+  font-family: var(--font_1);
+}
+
+.AnalyticsModal, .AnalyticsModal button{
+  font-family: var(--font_1);
+}
+
+
 .actions {
   display: flex;
   gap: 10px;
@@ -516,7 +576,7 @@ export default {
 }
 
 /* Media Queries */
-@media (max-width: 760px) {
+@media (max-width: 1000px) {
   .dashboard nav ul {
     display: none;
     position: absolute;
@@ -600,11 +660,11 @@ export default {
 
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
+  margin: 20% auto;
+  padding: 40px;
   border: 1px solid #888;
-  width: 90%;
-  max-width: 600px;
+  width: max-content;
+  height: max-content;
   border-radius: 8px;
   position: relative;
   box-sizing: border-box;
@@ -636,6 +696,12 @@ export default {
   color: #d36d00;
 }
 
+.newLinkModal {
+  font-family: var(--font_1);
+
+}
+
+
 .form-group {
   margin-bottom: 15px;
   display: flex;
@@ -650,8 +716,14 @@ export default {
 .form-group input {
   width: calc(100% - 22px);
   padding: 10px;
+  outline: none;
   border: 1px solid #ddd;
   border-radius: 4px;
+  transition: border 0.2s ease-in-out;
+}
+
+.form-group input:focus {
+  border: 2px solid #007bff;
 }
 
 .form-group button {
