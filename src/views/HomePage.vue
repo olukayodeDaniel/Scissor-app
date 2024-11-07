@@ -297,8 +297,13 @@ export default {
 }
 
 /* General Styles */
+.feature-text h1{
+    padding: 10px;
+}
+
 .feature-text p{
     font-family: var(--font-secondary);
+    padding: 10px;
 }
 
 
